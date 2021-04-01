@@ -1,0 +1,64 @@
+/* Style the counter calender-cards */
+.calender-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* padding: 16px; */
+  text-align: center;
+  background-color: #f1f1f1;
+  color: #782664;
+  border-radius: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  width: 69px;
+  height: 110px;
+  cursor: pointer;
+  transition: 0.3s;
+  --webkit-transition-duration: 0.3s; /* Safari */
+  border: none;
+  outline: none;
+  margin: 5px !important;
+  border-top: 8px solid #782664;
+}
+
+.p {
+  font-size: 50px;
+  font-weight: 600;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.reddish {
+  border-top: 8px solid red;
+}
+
+.purplish {
+  border-top: 8px solid #9d11bd;
+}
+
+.bluish {
+  border-top: 8px solid #6337d4;
+}
+
+.limesh {
+  border-top: 8px solid #56d1c1;
+}
+
+.goldish {
+  border-top: 8px solid #d9ac5f;
+}
+
+.greenish {
+  border-top: 8px solid #78de8c;
+}
+
+.calender-card:focus {
+  background-color: #782664;
+  color: #ffffff !important;
+  border: 5px solid #ffffff;
+  border-top: 5px solid red;
+}
+
+span {
+  font-size: 10px;
+  margin: 0px !important;
+  padding: 0px !important;
+}

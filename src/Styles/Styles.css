@@ -1,0 +1,254 @@
+.frame {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  padding: 0;
+  width: 100% !important;
+  height: 100% !important;
+  background-image: linear-gradient(
+      rgb(151, 18, 107, 0.3),
+      rgb(151, 18, 107, 0.3)
+    ),
+    url("../assets/shopping.jpg");
+}
+
+.purple,
+p,
+h3 {
+  color: #782664;
+  font-weight: 600;
+}
+
+.img {
+  width: 100%;
+  border-radius: 5px;
+  height: 100%;
+}
+
+.a-left {
+  text-align: left;
+}
+
+.a-right {
+  text-align: right;
+}
+
+.f-right {
+  float: right;
+}
+
+.f-10 {
+  font-size: 12px;
+}
+
+.f-11 {
+  font-size: 11px;
+}
+
+.f-12 {
+  font-size: 12px !important;
+}
+
+.f-16 {
+  font-size: 16px !important;
+}
+
+.black {
+  color: rgb(51, 51, 51) !important;
+  list-style-type: none;
+}
+
+.main {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.8s;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.8s;
+  width: 50px;
+  height: 70px;
+  padding: 0px 2px;
+  border-radius: 5px;
+  margin: 0px 6px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.larger {
+  width: 70px;
+  height: 80px;
+  padding: 3px;
+}
+
+.container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 20px;
+}
+
+.text {
+  margin: 6px;
+  font-size: 12px;
+}
+
+br {
+  display: block;
+  margin: 2px 0;
+  content: " ";
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  color: black;
+}
+
+.cOne {
+  width: 37%;
+}
+
+.cTwo {
+  width: 25%;
+}
+
+.cTwoo {
+  height: 80% !important;
+  border-left: 1px solid black;
+}
+
+.cThree {
+  width: 38%;
+  background-color: #782664;
+  border-radius: 8px;
+  height: 100% !important;
+  padding-left: 5px;
+  color: #fff;
+}
+
+.btn-white {
+  color: #fff !important;
+  margin: 3rem 1.2rem !important;
+}
+
+ul {
+  /* list-style-type: none; */
+  color: #fff;
+}
+
+.link {
+  color: purple;
+  text-decoration: none;
+}
+
+/* .link:hover {
+  text-decoration: underline;
+} */
+
+.link:active {
+  color: purple;
+  font-weight: 600;
+}
+
+.link:visited {
+  color: purple;
+  font-weight: 600;
+}
+
+.h-container {
+  text-align: center;
+}
+
+.w50 {
+  width: 50%;
+}
+
+.w80 {
+  width: 80%;
+}
+
+.w90 {
+  width: 90%;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.p-10 {
+  margin: 1rem !important;
+}
+
+.mx-10 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.ml-10 {
+  margin-left: 1rem !important;
+}
+
+.mx-15 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.my-10 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.my-15 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.m10 {
+  margin: 1rem !important;
+}
+
+.m15 {
+  margin: 1.5rem !important;
+}
+
+.mx-auto {
+  margin: auto !important;
+}
+
+.p-10 {
+  padding: 10px !important;
+}
+
+.plt-10 {
+  padding-left: 1rem !important;
+  padding-top: 1rem !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.bd-side {
+  border-left: 1px solid #782664;
+}
+
+.f-08 {
+  font-size: 8px !important;
+}

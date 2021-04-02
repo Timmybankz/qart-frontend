@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { toast } = require('react-toastify');
 
-const url = 'http://localhost:2000/validate-payment/';
+const url = 'https://apple-sundae-08986.herokuapp.com/validate-payment/';
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {

@@ -17,7 +17,7 @@ function Checkout({ cartTotal }) {
         clicked: false
     });
     const [activeStep, setActiveStep] = React.useState(0);
-    const [clicked, setClicked] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const [selectedDate, setDate] = React.useState(new Date().now);
     const [careerId, setCareer] = React.useState(1);
     const [tenure, setTenure] = React.useState(1);
@@ -32,7 +32,6 @@ function Checkout({ cartTotal }) {
         //     initializeMin();
         // }
 
-        setClicked(true);
         if (activeStep > 0)
             return submitForm();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -84,6 +83,7 @@ function Checkout({ cartTotal }) {
 
     const submitForm = () => {
         
+        setLoading(true);
         const data = {
             loanTenure: tenure,
             careerId: careerId,
@@ -105,6 +105,9 @@ function Checkout({ cartTotal }) {
             .catch((err) => {
                 errorToast(err.response.data)
             })
+            .finally(() => {
+                setLoading(false);
+            });
     }
 
     return (
@@ -134,7 +137,7 @@ function Checkout({ cartTotal }) {
             }
             <Grid>
                 <Button variant="outlined" className={"outlined-btn"} 
-                    onClick={handleNext} color="secondary" disabled={state.salary < 1000 || !selectedDate}>
+                    onClick={handleNext} color="secondary" disabled={state.salary < 1000 || !selectedDate || loading}>
                     Continue
                 </Button>
             </Grid>

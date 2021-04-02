@@ -10,15 +10,22 @@ axios.interceptors.request.use(function (config) {
   return config;
 });
 
-exports.postCustomerRequest = async (data) => {
+async function postCustomerRequest(data) {
     return await axios.post(url, data);
 }
 
-exports.successToast = (msg) => {
+function successToast(msg) {
     toast.success(msg);
 }
 
-exports.errorToast = (msg) => {
+function errorToast(msg) {
     toast.error(msg);
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+    errorToast,
+    postCustomerRequest,
+    successToast
+}
+  

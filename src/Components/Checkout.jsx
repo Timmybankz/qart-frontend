@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import SharedStepper from './Stepper';
 import { SecondStep, FirstStep } from './Steps';
-import { postCustomerRequest, successToast, errorToast } from '../service/httpService';
+import http from '../service/httpService';
 
 function Checkout({ cartTotal }) {
     
@@ -98,12 +98,12 @@ function Checkout({ cartTotal }) {
 
         console.log(data);
 
-        postCustomerRequest(data)
+        http.postCustomerRequest(data)
             .then(res => {
-                successToast(res.data);
+                http.successToast(res.data);
             })
             .catch((err) => {
-                errorToast(err.response.data)
+                http.errorToast(err.response.data)
             })
             .finally(() => {
                 setLoading(false);

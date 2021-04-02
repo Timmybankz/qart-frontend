@@ -47,7 +47,7 @@ function Products(props) {
                             <img src={suitImage} alt="Avatar" className="img" />
                         </div>
                         <div className="text">
-                            Meeysoo P45 Pro <br/> N45,000 <br /> Qty: 1
+                            Men's Long Sleeve Shirt <br/> N15,000 <br /> Qty: 2
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@ function Products(props) {
                             <img src={phoneImage} alt="Avatar" className="img" />
                         </div>
                         <div className="text">
-                            Men's Long Sleeve Shirt <br/> N115,000 <br /> Qty: 2
+                            Meeysoo P45 Pro <br/> N90,000 <br /> Qty: 1
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ function Products(props) {
                     <p className="a-left black">
                         Total Cart Value:
                         <Typography variant="body1" className="f-right text-center black">
-                            <strong>N160,000</strong>
+                            <strong>N120,000</strong>
                         </Typography>
                     </p>
                 </div>

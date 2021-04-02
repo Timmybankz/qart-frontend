@@ -4,14 +4,30 @@ import Button from '@material-ui/core/Button';
 import SharedStepper from './Stepper';
 import { SecondStep, FirstStep } from './Steps';
 
-function Checkout(props) {
+function Checkout({ cartTotal }) {
     
+    const [state, setState] = React.useState({
+        activeStep: 0,
+        hasLoan: 'no',
+        shoppingCredit: 0,
+        minPayable: 0,
+        monthlyInstl: 0,
+        salary: 0,
+        clicked: false
+    });
     const [activeStep, setActiveStep] = React.useState(0);
-    const [selectedDate, setSelectedDate] = React.useState(new Date().now);
-    const [amount, setAmount] = React.useState(0);
-    const [hasLoan, setLoanChange] = React.useState('');
+    const [selectedDate, setDate] = React.useState(new Date().now);
+    const [careerId, setCareer] = React.useState(1);
+    const [tenure, setTenure] = React.useState(1);
+    const [placeholderAmount, setAmount] = React.useState(0);
 
     const handleNext = () => {
+        if (activeStep === 0 && !state.clicked)
+            initializeMin();
+
+        setState({ ...state, clicked: true });
+        if (activeStep > 0)
+            return submitForm();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -19,22 +35,51 @@ function Checkout(props) {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    // const handleReset = () => {
-    //     setActiveStep(0);
-    // };
+    const handleChange = (event) => {
+        const userObj = { ...state, [event.target.name]: event.target.value };
+        setState(userObj);
+    }
 
     const handleAmountChange = (event) => {
         setAmount(event.target.value);
     }
 
-    const handleLoanChange = (event) => {
-        setLoanChange(event.target.value);
+    const initializeMin = () => {
+        let userObj = state;
+        userObj.minPayable = (0.3 * cartTotal);
+        setAmount(userObj.minPayable);
+        userObj.shoppingCredit = (cartTotal - state.minPayable);
+
+        const interest = (0.04 * state.shoppingCredit);
+        userObj.monthlyInstl = Math.floor(((state.shoppingCredit)/tenure) + interest);
+        setState(userObj);
+        console.log(state);
     }
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-        console.log(selectedDate);
-    };
+    const handleTenureChange = (id) => {
+        setTenure(id);
+        let userObj = state;
+        const interest = (0.04 * state.shoppingCredit);
+
+        userObj.monthlyInstl = Math.floor(( state.shoppingCredit/tenure) + interest);
+        setState(userObj);
+    }
+
+    const updateBreakdown = () => {
+        let userObj = state;
+        userObj.minPayable = parseInt(placeholderAmount);
+        userObj.shoppingCredit = (cartTotal - state.minPayable);
+
+        const interest = (0.04 * state.shoppingCredit);
+        userObj.monthlyInstl = Math.floor(((state.shoppingCredit)/tenure) + interest);
+        setState(userObj);
+    }
+
+    const submitForm = () => {
+        const userObj = state;
+        userObj.tenure = tenure;
+        userObj.careerId = careerId;
+    }
 
     return (
         <div className="text-center">
@@ -42,21 +87,22 @@ function Checkout(props) {
             { activeStep === 0 ? 
                 (
                     <FirstStep
-                        handleDateChange={handleDateChange} 
+                        state={state}
+                        handleChange={handleChange}
                         selectedDate={selectedDate}
-                        amount={amount}
-                        setAmount={handleAmountChange}
-                        hasLoan={hasLoan}
-                        handleLoanChange={handleLoanChange}
+                        setDate={setDate}
+                        careerId={careerId}
+                        setCareer={setCareer}
                     />
                 ) : (
                     <SecondStep
-                        handleDateChange={handleDateChange} 
-                        selectedDate={selectedDate}
-                        amount={amount}
-                        setAmount={handleAmountChange}
-                        hasLoan={hasLoan}
-                        handleLoanChange={handleLoanChange}
+                        tenure={tenure}
+                        handleTenureChange={handleTenureChange}
+                        state={state}
+                        handleChange={handleChange}
+                        placeholderAmount={placeholderAmount}
+                        handleAmountChange={handleAmountChange}
+                        updateBreakdown={updateBreakdown}
                     />
                 )
             }

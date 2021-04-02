@@ -39,7 +39,7 @@ h3 {
 }
 
 .f-10 {
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .f-11 {
@@ -50,13 +50,27 @@ h3 {
   font-size: 12px !important;
 }
 
+.f-13 {
+  font-size: 13px;
+}
+
 .f-16 {
   font-size: 16px !important;
 }
 
-.black {
-  color: rgb(51, 51, 51) !important;
+.o-list {
+  color: purple !important;
+  margin-top: 20px !important;
   list-style-type: none;
+}
+
+.white {
+  color: #ffffff !important;
+}
+
+.o-list > li {
+  margin-top: 8px;
+  font-size: 13px;
 }
 
 .main {
@@ -123,20 +137,27 @@ br {
 
 .cOne {
   width: 37%;
+  text-align: left;
 }
 
 .cTwo {
   width: 25%;
+  text-align: left;
 }
 
 .cTwoo {
   height: 80% !important;
+  text-align: left;
   border-left: 1px solid black;
 }
 
 .cThree {
   width: 38%;
-  background-color: #782664;
+  background: linear-gradient(
+    90deg,
+    rgba(103, 37, 68, 1) 0%,
+    rgba(219, 15, 126, 1) 82%
+  );
   border-radius: 8px;
   height: 100% !important;
   padding-left: 5px;
@@ -167,6 +188,11 @@ ul {
   font-weight: 600;
 }
 
+.link-active {
+  color: purple;
+  font-weight: 600;
+}
+
 .link:visited {
   color: purple;
   font-weight: 600;
@@ -176,12 +202,23 @@ ul {
   text-align: center;
 }
 
+.w48 {
+  width: 48%;
+}
+
 .w50 {
   width: 50%;
 }
 
 .w80 {
   width: 80%;
+}
+
+.btn-outline {
+  border-radius: 25px !important;
+  margin-top: -5px !important;
+  margin-bottom: 15px !important;
+  border-color: #fff !important;
 }
 
 .w90 {
@@ -199,6 +236,20 @@ ul {
 .mx-10 {
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.inputBox {
+  background-color: #fff;
+  height: 30px;
+  margin-top: -2rem;
+}
+
+.mt-10 {
+  margin-top: 1rem;
+}
+
+.ml-07 {
+  margin-left: 0.7rem !important;
 }
 
 .ml-10 {
@@ -251,4 +302,12 @@ ul {
 
 .f-08 {
   font-size: 8px !important;
+}
+
+.summary {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.8s;
+  padding: 0px;
+  border-radius: 13px;
+  margin: 15px 5px;
 }

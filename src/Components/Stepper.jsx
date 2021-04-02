@@ -28,7 +28,7 @@ export default function SharedStepper({ activeStep, handleBack }) {
             <Grid container>
                 <Grid className="mx-auto" item xs={3}>
                     { activeStep === 1? 
-                        <Button className="mx-auto" onClick={handleBack} startIcon={<KeyboardBackspaceIcon/>}>
+                        <Button className="mx-auto" color="secondary" onClick={handleBack} startIcon={<KeyboardBackspaceIcon/>}>
                             Back
                         </Button>: ''
                     }

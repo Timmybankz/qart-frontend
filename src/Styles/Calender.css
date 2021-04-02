@@ -57,6 +57,17 @@
   border-top: 5px solid red;
 }
 
+.calender-card-focus {
+  background: linear-gradient(
+    90deg,
+    rgba(103, 37, 68, 1) 0%,
+    rgba(219, 15, 126, 1) 82%
+  );
+  color: #ffffff !important;
+  border: 5px solid #ffffff;
+  border-top: 5px solid red;
+}
+
 span {
   font-size: 10px;
   margin: 0px !important;

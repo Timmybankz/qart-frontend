@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import SharedStepper from './Stepper';
 import { SecondStep, FirstStep } from './Steps';
+import { postCustomerRequest, successToast, errorToast } from '../service/httpService';
 
 function Checkout({ cartTotal }) {
     
@@ -16,16 +17,22 @@ function Checkout({ cartTotal }) {
         clicked: false
     });
     const [activeStep, setActiveStep] = React.useState(0);
+    const [clicked, setClicked] = React.useState(false);
     const [selectedDate, setDate] = React.useState(new Date().now);
     const [careerId, setCareer] = React.useState(1);
     const [tenure, setTenure] = React.useState(1);
     const [placeholderAmount, setAmount] = React.useState(0);
 
-    const handleNext = () => {
-        if (activeStep === 0 && !state.clicked)
-            initializeMin();
+    useEffect(() => {
+        initializeMin();
+    }, []);
 
-        setState({ ...state, clicked: true });
+    const handleNext = () => {
+        // if (activeStep === 0 && !clicked) {
+        //     initializeMin();
+        // }
+
+        setClicked(true);
         if (activeStep > 0)
             return submitForm();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -76,9 +83,28 @@ function Checkout({ cartTotal }) {
     }
 
     const submitForm = () => {
-        const userObj = state;
-        userObj.tenure = tenure;
-        userObj.careerId = careerId;
+        
+        const data = {
+            loanTenure: tenure,
+            careerId: careerId,
+            payDate: selectedDate,
+            totalCost: cartTotal,
+            hasLoan: state.hasLoan,
+            shoppingCredit: state.shoppingCredit,
+            minPayable: state.minPayable,
+            monthlyInstl: state.monthlyInstl,
+            salary: state.salary
+        }
+
+        console.log(data);
+
+        postCustomerRequest(data)
+            .then(res => {
+                successToast(res.data);
+            })
+            .catch((err) => {
+                errorToast(err.response.data)
+            })
     }
 
     return (
@@ -107,7 +133,8 @@ function Checkout({ cartTotal }) {
                 )
             }
             <Grid>
-                <Button variant="outlined" className={"outlined-btn"} onClick={handleNext} color="secondary">
+                <Button variant="outlined" className={"outlined-btn"} 
+                    onClick={handleNext} color="secondary" disabled={state.salary < 1000 || !selectedDate}>
                     Continue
                 </Button>
             </Grid>

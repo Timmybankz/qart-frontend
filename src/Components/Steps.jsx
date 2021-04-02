@@ -95,7 +95,8 @@ export function FirstStep({ state, handleChange, careerId, setCareer, selectedDa
                     <InputLabel htmlFor="outlined-adornment-amount" color="secondary">Amount</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-amount"
-                        value={state.amount}
+                        value={state.salary}
+                        name="salary"
                         color="primary"
                         onChange={handleChange}
                         startAdornment={<InputAdornment position="start">₦</InputAdornment>}

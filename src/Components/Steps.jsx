@@ -5,7 +5,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import NumberFormat from 'react-number-format';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Radio from '@material-ui/core/Radio';
@@ -45,27 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function NumberFormatCustom(props) {
-    const { inputRef, onChange, ...other } = props;
-  
-    return (
-      <NumberFormat
-        {...other}
-        getInputRef={inputRef}
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              name: props.name,
-              value: values.value,
-            },
-          });
-        }}
-        thousandSeparator
-        isNumericString
-      />
-    );
-}
-
 export function FirstStep({ state, handleChange, careerId, setCareer, selectedDate, setDate }) {
 
     const classes = useStyles();
@@ -101,9 +79,6 @@ export function FirstStep({ state, handleChange, careerId, setCareer, selectedDa
                         onChange={handleChange}
                         startAdornment={<InputAdornment position="start">₦</InputAdornment>}
                         labelWidth={60}
-                        InputProps={{
-                            inputComponent: NumberFormatCustom,
-                        }}
                     />
                 </FormControl>
             </Grid>
@@ -139,7 +114,7 @@ export function FirstStep({ state, handleChange, careerId, setCareer, selectedDa
 }
 
 export function SecondStep({ state, handleChange, tenure, updateBreakdown,
-        handleTenureChange, handleAmountChange, placeholderAmount }) {
+        handleTenureChange, handleAmountChange, placeholderAmount, cartTotal }) {
 
     const classes = useStyles();
 
@@ -175,16 +150,16 @@ export function SecondStep({ state, handleChange, tenure, updateBreakdown,
                         <div className="column cTwo">
                             <div className="cTwoo">
                                 <ul className="o-list">
-                                    <li><strong>{`₦ ${addCommas(state.shoppingCredit)}`}</strong></li>
-                                    <li><strong>{`₦ ${addCommas(state.minPayable)}`}</strong></li>
-                                    <li><strong>{`₦ ${addCommas(state.monthlyInstl)}`}</strong></li>
+                                    <li><strong>{`₦ ${state.displayedShoppingCredit}`}</strong></li>
+                                    <li><strong>{`₦ ${state.displayedMinPayable}`}</strong></li>
+                                    <li><strong>{`₦ ${state.displayedMonthlyInstl}`}</strong></li>
                                     <li><strong>{tenure} {tenure < 2 ? 'Month': 'Months' }</strong></li>
                                 </ul>
                             </div>
                         </div>
                         <div className="column cThree">
                             <div className="cThreee">
-                                <p className="white f-12 mx-10 mt-10">Customize Down Payment</p>
+                                <p className="white f-12 mx-15 my-10">Customize Down Payment</p>
                                 <FormControl className={classes.margin}>
                                     {/* <InputLabel htmlFor="outlined-adornment-amount" color="secondary">Amount</InputLabel> */}
                                     <OutlinedInput
@@ -199,7 +174,7 @@ export function SecondStep({ state, handleChange, tenure, updateBreakdown,
                                     />
                                 </FormControl>
                                 <Grid>
-                                    <Button variant="outlined" className={"white btn-outline"} disabled={state.minPayable > placeholderAmount} onClick={updateBreakdown}>
+                                    <Button variant="outlined" className={"white btn-outline"} disabled={((0.3 * cartTotal) >= placeholderAmount) || (placeholderAmount > cartTotal)} onClick={updateBreakdown}>
                                         Update Breakdown
                                     </Button>
                                 </Grid>
@@ -209,6 +184,27 @@ export function SecondStep({ state, handleChange, tenure, updateBreakdown,
                 </div>
             </Grid>
     );
+}
+
+export function ThirdStep({ handleReset }) {
+
+    return (
+        <div className="text-center">
+            <div className="main w70 mx-auto h70">
+                <h1 className={"gradient-color"}>Pay Qart</h1>
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+
+                <p>Your request is currently undergoing review, we will contact you soon.</p>
+
+                <Button variant="contained" color="secondary" onClick={handleReset}>
+                    Return Home
+                </Button>
+            </div>
+        </div>
+    )
 }
 
 const calender = [
@@ -226,16 +222,17 @@ const careerType = [
     { id: 3, comment: 'Corporate Organization', img: companyImage }
 ];
 
-const addCommas = (num) => {
-    const str = num.toString().split('.');
-    if (str[0].length >= 4) {
-        //add comma every 3 digits befor decimal
-        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
-    }
-    /* Optional formating for decimal places
-    if (str[1] && str[1].length >= 4) {
-        //add space every 3 digits after decimal
-        str[1] = str[1].replace(/(\d{3})/g, '$1 ');
-    }*/
-    return str.join('.');
-}
+// const addCommas = (num) => {
+//     const str = num.toString().split('.');
+//     if (str[0].length >= 4) {
+//         //add comma every 3 digits befor decimal
+//         str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+//     }
+//     /* Optional formating for decimal places
+//     if (str[1] && str[1].length >= 4) {
+//         //add space every 3 digits after decimal
+//         str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+//     }*/
+//     return str.join('.');
+// }
+

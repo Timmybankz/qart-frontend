@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import SharedStepper from './Stepper';
-import { SecondStep, FirstStep } from './Steps';
+import { SecondStep, FirstStep, ThirdStep } from './Steps';
 import http from '../service/httpService';
 
 function Checkout({ cartTotal }) {
@@ -13,6 +13,9 @@ function Checkout({ cartTotal }) {
         shoppingCredit: 0,
         minPayable: 0,
         monthlyInstl: 0,
+        displayedShoppingCredit: '',
+        displayedMinPayable: '',
+        displayedMonthlyInstl: '',
         salary: 0,
         clicked: false
     });
@@ -22,6 +25,8 @@ function Checkout({ cartTotal }) {
     const [careerId, setCareer] = React.useState(1);
     const [tenure, setTenure] = React.useState(1);
     const [placeholderAmount, setAmount] = React.useState(0);
+    const [refresh, setRefresh] = React.useState(false);
+    const [formSubmitted, setFormSubmitted] = React.useState(false);
 
     useEffect(() => {
         initializeMin();
@@ -32,7 +37,7 @@ function Checkout({ cartTotal }) {
         //     initializeMin();
         // }
 
-        if (activeStep > 0)
+        if (activeStep === 1 && formSubmitted)
             return submitForm();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -40,6 +45,10 @@ function Checkout({ cartTotal }) {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
+
+    const handleReset = () => {
+        setActiveStep(0);
+    };    
 
     const handleChange = (event) => {
         const userObj = { ...state, [event.target.name]: event.target.value };
@@ -58,8 +67,9 @@ function Checkout({ cartTotal }) {
 
         const interest = (0.04 * state.shoppingCredit);
         userObj.monthlyInstl = Math.floor(((state.shoppingCredit)/tenure) + interest);
-        setState(userObj);
-        console.log(state);
+        userObj.displayedShoppingCredit = addCommas(userObj.shoppingCredit);
+        userObj.displayedMonthlyInstl = addCommas(userObj.monthlyInstl);
+        userObj.displayedMinPayable = addCommas(userObj.minPayable)
     }
 
     const handleTenureChange = (id) => {
@@ -67,7 +77,9 @@ function Checkout({ cartTotal }) {
         let userObj = state;
         const interest = (0.04 * state.shoppingCredit);
 
-        userObj.monthlyInstl = Math.floor(( state.shoppingCredit/tenure) + interest);
+        const MonthlyPayment = Math.floor(( state.shoppingCredit/id) + interest);
+        userObj.monthlyInstl = MonthlyPayment;
+        userObj.displayedMonthlyInstl = addCommas(userObj.monthlyInstl);
         setState(userObj);
     }
 
@@ -78,6 +90,10 @@ function Checkout({ cartTotal }) {
 
         const interest = (0.04 * state.shoppingCredit);
         userObj.monthlyInstl = Math.floor(((state.shoppingCredit)/tenure) + interest);
+        userObj.displayedShoppingCredit = addCommas(userObj.shoppingCredit);
+        userObj.displayedMonthlyInstl = addCommas(userObj.monthlyInstl);
+        userObj.displayedMinPayable = addCommas(userObj.minPayable);
+        setRefresh(!refresh);
         setState(userObj);
     }
 
@@ -100,7 +116,9 @@ function Checkout({ cartTotal }) {
 
         http.postCustomerRequest(data)
             .then(res => {
-                http.successToast(res.data);
+                // http.successToast(res.data);
+                setFormSubmitted(true);
+                handleNext();
             })
             .catch((err) => {
                 http.errorToast(err.response.data)
@@ -123,26 +141,53 @@ function Checkout({ cartTotal }) {
                         careerId={careerId}
                         setCareer={setCareer}
                     />
-                ) : (
-                    <SecondStep
-                        tenure={tenure}
-                        handleTenureChange={handleTenureChange}
-                        state={state}
-                        handleChange={handleChange}
-                        placeholderAmount={placeholderAmount}
-                        handleAmountChange={handleAmountChange}
-                        updateBreakdown={updateBreakdown}
-                    />
+                ) : ( 
+                        activeStep === 1 ?
+                            <SecondStep
+                                tenure={tenure}
+                                handleTenureChange={handleTenureChange}
+                                state={state}
+                                refresh={refresh}
+                                cartTotal={cartTotal}
+                                handleChange={handleChange}
+                                placeholderAmount={placeholderAmount}
+                                handleAmountChange={handleAmountChange}
+                                updateBreakdown={updateBreakdown}
+                            /> :
+                            <ThirdStep
+                                handleReset={handleReset}
+                            />
                 )
             }
             <Grid>
-                <Button variant="outlined" className={"outlined-btn"} 
-                    onClick={handleNext} color="secondary" disabled={state.salary < 1000 || !selectedDate || loading}>
-                    Continue
-                </Button>
+                { activeStep < 2 ?  
+                     <Button variant="outlined" className={"outlined-btn"} 
+                        onClick={handleNext} color="secondary" disabled={state.salary < 1000 || !selectedDate || loading}>
+                        Continue
+                    </Button> : ''
+                }
             </Grid>
         </div>
     );
 }
 
 export default Checkout;
+
+
+// const numberFormat = (value) => {
+//   return new Intl.NumberFormat('en-IN').format(value);
+// }
+
+const addCommas = (num) => {
+    const str = num.toString().split('.');
+    if (str[0].length >= 4) {
+        //add comma every 3 digits befor decimal
+        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    /* Optional formating for decimal places
+    if (str[1] && str[1].length >= 4) {
+        //add space every 3 digits after decimal
+        str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+    }*/
+    return str.join('.');
+}

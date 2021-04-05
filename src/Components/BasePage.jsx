@@ -19,7 +19,7 @@ export default function BasePage() {
 
     const classes = useStyles();
 
-    const [cartTotal, setCartTotal] = useState(120000);
+    const [cartTotal, setCartTotal] = useState(80500);
 
     return(
         <Grid container component="main" className={classes.root}>

@@ -56,7 +56,7 @@ function Products(props) {
                             <img src={phoneImage} alt="Avatar" className="img" />
                         </div>
                         <div className="text">
-                            Meeysoo P45 Pro <br/> N90,000 <br /> Qty: 1
+                            Meeysoo P45 Pro <br/> N50,500 <br /> Qty: 1
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ function Products(props) {
                     <p className="a-left black">
                         Total Cart Value:
                         <Typography variant="body1" className="f-right text-center black">
-                            <strong>N120,000</strong>
+                            <strong>N80,500</strong>
                         </Typography>
                     </p>
                 </div>
